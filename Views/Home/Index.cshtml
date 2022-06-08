@@ -1,0 +1,239 @@
+﻿@using Microsoft.AspNetCore.Html
+@using la_mia_pizzeria_static.Models
+
+@{ //esercizio 1
+    Func<dynamic, IHtmlContent> StampaInfo(Info mInfo) =>
+    @<div>
+        <h2>@mInfo.Name @mInfo.Surname</h2>
+    </div>;
+}
+
+@{ //esercizio 2
+    Func<dynamic, IHtmlContent> StampaSomma(int n)
+    {
+        int iSomma = 0;
+        for(int i = 0; i <= n; i++)
+        {
+            iSomma += i;
+        }
+        return @<span>@iSomma</span>;
+    }
+}
+
+@{ //esercizio 3
+    Func<dynamic, IHtmlContent> StampaContaLettera()
+    {
+        int somma = 0;
+
+        string testo = "nel mezzo del cammin di nostra vita";
+
+        foreach (char a in testo)
+        {
+            if (a == 'a') { somma += 1; }
+        }
+        return @<div>@somma</div>;
+    }
+}
+
+@{ //esercizio 4
+    Func<dynamic, IHtmlContent> StampaNumeriRandom()
+    {
+        List<int> RandomList = new List<int>();
+
+        for(int i = 1; i <= 20; i++)
+        {
+            Random random = new Random();
+            int number = random.Next(1, 90);
+            RandomList.Add(number);
+        }
+        return
+        @<div>
+            @foreach (int num in RandomList)
+            {
+                if (num >= 20 && num < 70)
+                {
+                    <div>@num</div>
+                    ;
+                }
+             }
+        </div>;
+    }
+}
+
+@{
+    //esercizio 5
+    Func<dynamic, IHtmlContent> StampaData()
+    {
+        return @<div>@DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")</div>;
+    }
+}
+
+@{
+    //esercizio 6
+    Func<dynamic, IHtmlContent> StampaDataComplesso()
+    {
+        return 
+        @<div>@DateTime.Today.AddDays(-7)</div>;
+        <div>@DateTime.Today.DayOfWeek</div>;
+        <div>@DateTime.Today.AddYears(1).DayOfWeek</div>;
+    }
+}
+
+
+@*--------Stampa-----------*@
+
+@{ //esercizio 1
+    if (Model != null)
+    {
+        foreach (var dati in Model)
+        {
+            @StampaInfo((la_mia_pizzeria_static.Models.Info)dati)(null);
+        }
+    }
+}
+
+@{ //esercizio 2
+    @StampaSomma(10)(null);
+}
+
+@{ //esercizio 3
+    @StampaContaLettera()(null);
+}
+
+@{ //esercizio 4
+    @StampaNumeriRandom()(null);
+}
+
+@{ //esercizio 5
+    @StampaData()(null);
+}
+
+@{ //esercizio 6
+    @StampaDataComplesso()(null);
+}
+
+
+@*---------------Nuovo Layout------------------*@
+
+@{
+    Layout = "~/Views/Shared/_LayoutEsercizio.cshtml";
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - la_mia_pizzeria_static</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/la_mia_pizzeria_static.styles.css" asp-append-version="true" />
+</head>
+<body>
+
+    <div class="card mt-2" style="width: 18rem;">
+        <img class="card-img-top" src="~/Img/pizza-margherita.jfif" alt="Card image cap">
+
+      <div class="card-body">
+        <h5 class="card-title">Pizza Margherita</h5>
+        <p class="card-text">Descrzione della Pizza</p>
+        <p class="card-text">Prezzo della Pizza: 5€</p>
+      </div>
+
+    </div>
+
+    <div class="card mt-3" style="width: 18rem;">
+        <img class="card-img-top" src="~/Img/pizza-quattro-formaggi.jfif" alt="Card image cap">
+
+      <div class="card-body">
+        <h5 class="card-title">Pizza Quattro Formaggi</h5>
+        <p class="card-text">Descrzione della Pizza</p>
+        <p class="card-text">Prezzo della Pizza: 7€</p>
+      </div>
+
+    </div>
+
+    <div class="card mt-3" style="width: 18rem;">
+        <img class="card-img-top" src="~/Img/pizza-quattro-stagioni.jfif" alt="Card image cap">
+
+      <div class="card-body">
+        <h5 class="card-title">Pizza Quattro Stagioni</h5>
+        <p class="card-text">Descrzione della Pizza</p>
+        <p class="card-text">Prezzo della Pizza: 7€</p>
+      </div>
+
+    </div>
+
+    <div class="card mt-3" style="width: 18rem;">
+        <img class="card-img-top" src="~/Img/pizza-margherita.jfif" alt="Card image cap">
+
+      <div class="card-body">
+        <h5 class="card-title">Pizza Margherita</h5>
+        <p class="card-text">Descrzione della Pizza</p>
+        <p class="card-text">Prezzo della Pizza: 5€</p>
+      </div>
+
+    </div>
+
+    <div class="card mt-3" style="width: 18rem;">
+        <img class="card-img-top" src="~/Img/pizza-quattro-formaggi.jfif" alt="Card image cap">
+
+      <div class="card-body">
+        <h5 class="card-title">Pizza Quattro Formaggi</h5>
+        <p class="card-text">Descrzione della Pizza</p>
+        <p class="card-text">Prezzo della Pizza: 7€</p>
+      </div>
+
+    </div>
+
+    <div class="card mt-3" style="width: 18rem;">
+        <img class="card-img-top" src="~/Img/pizza-quattro-stagioni.jfif" alt="Card image cap">
+
+      <div class="card-body">
+        <h5 class="card-title">Pizza Quattro Stagioni</h5>
+        <p class="card-text">Descrzione della Pizza</p>
+        <p class="card-text">Prezzo della Pizza: 7€</p>
+      </div>
+
+    </div>
+
+    <div class="card mt-3" style="width: 18rem;">
+        <img class="card-img-top" src="~/Img/pizza-margherita.jfif" alt="Card image cap">
+
+      <div class="card-body">
+        <h5 class="card-title">Pizza Margherita</h5>
+        <p class="card-text">Descrzione della Pizza</p>
+        <p class="card-text">Prezzo della Pizza: 5€</p>
+      </div>
+
+    </div>
+
+    <div class="card mt-3" style="width: 18rem;">
+        <img class="card-img-top" src="~/Img/pizza-quattro-formaggi.jfif" alt="Card image cap">
+
+      <div class="card-body">
+        <h5 class="card-title">Pizza Quattro Formaggi</h5>
+        <p class="card-text">Descrzione della Pizza</p>
+        <p class="card-text">Prezzo della Pizza: 7€</p>
+      </div>
+
+    </div>
+
+    <div class="card mt-3" style="width: 18rem;">
+        <img class="card-img-top" src="~/Img/pizza-quattro-stagioni.jfif" alt="Card image cap">
+
+      <div class="card-body">
+        <h5 class="card-title">Pizza Quattro Stagioni</h5>
+        <p class="card-text">Descrzione della Pizza</p>
+        <p class="card-text">Prezzo della Pizza: 7€</p>
+      </div>
+
+    </div>
+    
+
+</body>
+</html>

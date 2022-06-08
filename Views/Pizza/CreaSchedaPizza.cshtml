@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Crea Pizza";
+    ViewBag.TitoloPagina = "Crea Pizza Con File";
+    
+}
+
+@model la_mia_pizzeria_static.Models.Pizza
+
+@{
+<div class="dl-border">
+    <h4>Dettagli</h4>
+    <hr />
+    <dl class="dl-horizontal">
+       <dt>
+            @Html.DisplayNameFor(model => model.Foto)
+       </dt>
+        <dd>
+            <img src="@Url.Content(Model.sFoto)" />
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descrizione)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descrizione)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Prezzo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Prezzo)
+        </dd>
+    </dl>
+ </div>
+
+<h2>@Html.ActionLink("Home", "Index", "Pizza")</h2>
+
+ }

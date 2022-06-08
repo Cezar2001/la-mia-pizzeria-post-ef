@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Html;
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = null;
+}
+@model la_mia_pizzeria_static.Models.ListaPizze
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - la_mia_pizzeria_static</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/la_mia_pizzeria_static.styles.css" asp-append-version="true" />
+</head>
+<body>
+  
+<header>
+    <h1>Pizzeria</h1>
+</header>
+
+<h2>@Html.ActionLink("Aggiungi una Pizza", "CreaFormPizza", "Pizza")</h2>
+
+<div class="container d-flex flex-wrap">
+        <div class="row">
+            @{
+                if (Model.ListaDiPizze != null)
+                {
+                    foreach (var p in Model.ListaDiPizze)
+                    {
+                        <div class="card">
+                            <img src="@p.sFoto" class="" />
+                            <h1 class="titolo">@p.Nome</h1>
+                            <p class="descrizione">@p.Descrizione</p>
+                            <p class="prezzo"> @p.Prezzo euro</p>
+                            <button class=""><a href="@Url.Action("Show","Pizza",new {@p.Id})">Dettagli</a></button>
+                        </div>
+
+                    }
+
+                }
+                else
+                {
+                    <h1>Non ci sono pizze</h1>
+                }
+
+            }
+        </div>
+
+    </div>
+
+
+</body>
+</html>
