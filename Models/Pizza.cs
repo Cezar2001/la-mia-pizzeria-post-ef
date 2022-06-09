@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace la_mia_pizzeria_static.Models
 {
@@ -16,10 +17,10 @@ namespace la_mia_pizzeria_static.Models
         }
     }
     */
-
+    [Table("Pizza")]
     public class Pizza
     {
-        [Required(ErrorMessage = "L'ID della Pizza è obbligatorio")]
+        [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Il Nome della Pizza è obbligatorio")]
@@ -32,6 +33,7 @@ namespace la_mia_pizzeria_static.Models
         
         public double Prezzo { get; set; }
 
+        [NotMapped()]
         public IFormFile Foto { get; set; }
        
         public Pizza()
@@ -39,9 +41,8 @@ namespace la_mia_pizzeria_static.Models
 
         }
 
-        public Pizza(int id, string nome, string descrizione, string foto, double prezzo)
+        public Pizza(string nome, string descrizione, string foto, double prezzo)
         {
-            Id = id;
             Nome = nome;
             Descrizione = descrizione;
             sFoto = foto;

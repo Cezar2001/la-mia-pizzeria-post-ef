@@ -1,42 +1,53 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using la_mia_pizzeria_static.Models;
 using System.Diagnostics;
+using la_mia_pizzeria_static;
+
 
 namespace la_mia_pizzeria_static.Controllers
 {
     public class PizzaController : Controller
     {
-        public static ListaPizze Pizze = null;
+    public static PizzaContext db = new PizzaContext();
+
+    public static ListaPizze Pizze = null;
         public IActionResult Index()
         {
             if (Pizze == null)
             {
-                Pizze = new ListaPizze();
-                Pizza quattroFormaggi = new Pizza(0, "Pizza Quattro Formaggi", "pomodoro , mozzarella campana , basilico", "/Img/pizza-quattro-formaggi.jfif", 3);
-                Pizza capricciosa = new Pizza(1, "Pizza Capriciosa", "Che soddisfa ogni capriccio", "/Img/pizza-quattro-stagioni.jfif", 4);
-                Pizza salsicciaPatate = new Pizza(2, "Pizza Margherita", "salsiccia , patate , mozzarella capana", "/Img/pizza-margherita.jfif", 5);
-                Pizza marinara = new Pizza(3, "Pizza Marinara", "Grande classico", "/Img/pizza-margherita.jfif", 3);
-                Pizza quattroStagioni = new Pizza(4, "Pizza Quattro Stagioni", "La quattro Stagioni", "/Img/pizza-quattro-stagioni.jfif", 4);
-                Pizze.ListaDiPizze.Add(quattroFormaggi);
-                Pizze.ListaDiPizze.Add(capricciosa);
-                Pizze.ListaDiPizze.Add(salsicciaPatate);
-                Pizze.ListaDiPizze.Add(marinara);
-                Pizze.ListaDiPizze.Add(quattroStagioni);
+                //Pizza quattroFormaggi = new Pizza("Pizza Quattro Formaggi", "pomodoro , mozzarella campana , basilico", "/Img/pizza-quattro-formaggi.jfif", 3);
+                //Pizza capricciosa = new Pizza("Pizza Capriciosa", "Che soddisfa ogni capriccio", "/Img/pizza-quattro-stagioni.jfif", 4);
+                //Pizza salsicciaPatate = new Pizza("Pizza Margherita", "salsiccia , patate , mozzarella capana", "/Img/pizza-margherita.jfif", 5);
+                //Pizza marinara = new Pizza("Pizza Marinara", "Grande classico", "/Img/pizza-margherita.jfif", 3);
+                //Pizza quattroStagioni = new Pizza("Pizza Quattro Stagioni", "La quattro Stagioni", "/Img/pizza-quattro-stagioni.jfif", 4);
+
+                //Pizze.ListaDiPizze.Add(quattroFormaggi);
+                //Pizze.ListaDiPizze.Add(capricciosa);
+                //Pizze.ListaDiPizze.Add(salsicciaPatate);
+                //Pizze.ListaDiPizze.Add(marinara);
+                //Pizze.ListaDiPizze.Add(quattroStagioni);
+
+                //db.Add(quattroFormaggi);
+                //db.Add(capricciosa);
+                //db.Add(salsicciaPatate);
+                //db.Add(marinara);
+                //db.Add(quattroStagioni);
+                //db.SaveChanges();
             }
 
-            return View(Pizze);
+            return View(db);
         }
 
-        public IActionResult Show(int id)
+        public IActionResult Show(int Id)
         {
-            return View("Show", Pizze.ListaDiPizze[id]);
+            var PizzaId = db.Pizze.Where(x => x.Id == Id).FirstOrDefault();
+            return View("Show", PizzaId);
         }
 
         public IActionResult CreaFormPizza()
         {
             Pizza NuovaPizza = new Pizza()
             {
-                Id = 0,
                 Nome = "",
                 Descrizione = "",
                 sFoto = "",
@@ -72,20 +83,21 @@ namespace la_mia_pizzeria_static.Controllers
 
             Pizza nuovaPizza = new Pizza()
             {
-                Id = DatiPizza.Id,
                 Nome = DatiPizza.Nome,
                 Descrizione = DatiPizza.Descrizione,
                 sFoto = "/File/" + fileName,
                 Prezzo = DatiPizza.Prezzo,
             };
 
-            Pizze.ListaDiPizze.Add(nuovaPizza);
+            db.Add(nuovaPizza);
+            db.SaveChanges();
             return View(nuovaPizza);
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int Id)
         {
-            return View("Edit", Pizze.ListaDiPizze[id]);
+            var PizzaId = db.Pizze.Where(x => x.Id == Id).FirstOrDefault();
+            return View("Edit", PizzaId);
         }
 
         [HttpPost]
@@ -115,33 +127,24 @@ namespace la_mia_pizzeria_static.Controllers
 
 
 
-            Pizza updatePizza = Pizze.ListaDiPizze.Find(x => x.Id == DatiPizza.Id);
+            var updatePizza = db.Pizze.Where(pizza => pizza.Id == DatiPizza.Id).FirstOrDefault();
 
             updatePizza.Nome = DatiPizza.Nome;
             updatePizza.Descrizione = DatiPizza.Descrizione;
-            if (updatePizza.Foto != DatiPizza.Foto)
-            {
-                updatePizza.Foto = DatiPizza.Foto;
-                updatePizza.sFoto = "/File/" + fileName;
-
-
-            }
-            else
-            {
-                updatePizza.Foto = DatiPizza.Foto;
-                updatePizza.sFoto = DatiPizza.sFoto;
-            }
-
+            updatePizza.sFoto = "/File/" + fileName;
             updatePizza.Prezzo = DatiPizza.Prezzo;
+            db.Pizze.UpdateRange(updatePizza);
+            db.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int Id)
         {
-            Pizza pizzaRemove = Pizze.ListaDiPizze.Find(x => x.Id == id);
-            Pizze.ListaDiPizze.Remove(pizzaRemove);
+            var PizzaId = db.Pizze.Where(x => x.Id == Id).FirstOrDefault();
+            db.Pizze.Remove(PizzaId);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
     }

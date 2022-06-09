@@ -1,9 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Html;
+@using la_mia_pizzeria_static;
+
 @{
     ViewData["Title"] = "Home Page";
     Layout = null;
 }
-@model la_mia_pizzeria_static.Models.ListaPizze
+
+@model la_mia_pizzeria_static.Models.PizzaContext
 
 
 <!DOCTYPE html>
@@ -28,9 +31,9 @@
 <div class="container d-flex flex-wrap">
         <div class="row">
             @{
-                if (Model.ListaDiPizze != null)
+                if (Model.Pizze != null)
                 {
-                    foreach (var p in Model.ListaDiPizze)
+                    foreach (var p in Model.Pizze)
                     {
                         <div class="card">
                             <img src="@p.sFoto" class="" />

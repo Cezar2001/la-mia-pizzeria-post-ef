@@ -1,3 +1,21 @@
+using la_mia_pizzeria_static;
+using la_mia_pizzeria_static.Models;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+//using PizzaContext db = new PizzaContext();
+//{
+//    //create
+//    Pizza newPizza = new Pizza { Nome = "Diavola" };
+//    db.Add(newPizza);
+//    db.SaveChanges();
+
+//    //read
+//    Console.WriteLine("Lista Pizze");
+//    List<Pizza> newListPizza = db.Pizze.OrderBy(Pizza => Pizza.Nome).ToList<Pizza>();
+//}
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
